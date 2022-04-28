@@ -50,12 +50,14 @@ class Score_management extends MainController
         $this->load->model('M_pef_score_management', 'pef');
         $data['count'] = '';
         $num_ass = $this->pef->get_assessor($id)->result();
+        $data['as_group_date'] = $this->pef->get_score_management_list_date()->result();
         $data['assessor'] = $this->pef->get_assessor($id)->result();
         $data['form'] = $this->pef->get_form($id)->result();
         $data['nominee'] = $this->pef->get_nominee($id)->result();
         $data['group'] = $this->pef->get_group_by_id($id)->result();
         $data['ass_data'] = $this->pef->get_ass_by_grp_id($id)->result();
         $data['point_data'] = $this->pef->get_data_point_by_grp_id($id)->result();
+
         // $data['sec_data'] = $this->pef->get_data_by_id($id)->result();
 
         for ($i = 0; $i < count($data['nominee']); $i++) {
@@ -234,5 +236,27 @@ class Score_management extends MainController
         $data = $this->pef->get_evaluation($id)->result();
         echo json_encode($data);
     } //end get_evaluation
+    public function update_status_edit()
+    {
+        $this->load->model('Da_pef_score_management', 'pef');
+        $grp_id = $this->input->post('grp_id');
+        $grp_status_edit = $this->input->post('grp_status_edit');
+        $this->pef->grp_id = $grp_id;
+        $this->pef->grp_status_edit = $grp_status_edit;
+        $this->pef->update_status_edit();
+        echo $grp_id;
+        echo $grp_status_edit;
+        $data['status'] = "success";
+        echo json_encode($data);
+        Redirect('/Score_management/Score_management/show_score_management_detail/' . $grp_id);
+    }
+
+    public function get_round(){
+        $grp_id = $this->input->post('grp_id');
+        $round = $this->input->post('grd_round');
+
+        echo $round;
+        $this->output('consent/v_score_management_detail', $round);
+    }
 
 }//End class Score_management

@@ -70,27 +70,124 @@
     $(document).ready(function() {
         $('#on').on('click', function() {
             var button = document.getElementById("on");
-            var round = $('input#round').attr("value");
-            if (button.value == 'on') {
-                for(var i = 1; i <= round; i++) {
+            var num = $('input#num').attr("value");
+            var grp_id = $(event.currentTarget).attr("data-grp_id");
+            var round = document.getElementById("round").value;
+            if(round == 1){
+                if (button.value == 'on') {
+                for(var i = 1; i <= num; i++) {
                     let elems = document.querySelector("#info"+i);
                     elems.disabled = true;
                 }
                 button.value = "off";
                 button.innerHTML = "close";
                 button.style.background = "#D90437";
+                $.ajax({
+                    type: "post",
+                    url: "<?php echo site_url().'/Score_management/Score_management/update_status_edit'; ?>",
+                    data: {
+                        'grp_id': grp_id,
+                        'grp_status_edit': '2'
+                    },
+                    dataType: "JSON",
+                    success: function(data) {
+                        console.log(data.status)
+                        location.reload();
+                    } //if
+                });
                 
             } else {
-                for(var i = 1; i <= round; i++) {
+                for(var i = 1; i <= num; i++) {
                     let elems = document.querySelector("#info"+i);
                     elems.disabled = false;
                 }
                 button.value = "on";
                 button.innerHTML = "open";
                 button.style.background = "#0DD739";
+                $.ajax({
+                    type: "post",
+                    url: "<?php echo site_url().'/Score_management/Score_management/update_status_edit'; ?>",
+                    data: {
+                        'grp_id': grp_id,
+                        'grp_status_edit': '1'
+                    },
+                    dataType: "JSON",
+                    success: function(data) {
+                        console.log(data.status)
+                        location.reload();
+                    } //if
+                });
+                }
+            }else if(round == 2){
+                if (button.value == 'on') {
+                for(var i = 1; i <= num; i++) {
+                    let elems = document.querySelector("#info"+i);
+                    elems.disabled = true;
+                }
+                button.value = "off";
+                button.innerHTML = "close";
+                button.style.background = "#D90437";
+                $.ajax({
+                    type: "post",
+                    url: "<?php echo site_url().'/Score_management/Score_management/update_status_edit'; ?>",
+                    data: {
+                        'grp_id': grp_id,
+                        'grp_status_edit': '3'
+                    },
+                    dataType: "JSON",
+                    success: function(data) {
+                        console.log(data.status)
+                        location.reload();
+                    } //if
+                });
+                
+            } else {
+                for(var i = 1; i <= num; i++) {
+                    let elems = document.querySelector("#info"+i);
+                    elems.disabled = false;
+                }
+                button.value = "on";
+                button.innerHTML = "open";
+                button.style.background = "#0DD739";
+                $.ajax({
+                    type: "post",
+                    url: "<?php echo site_url().'/Score_management/Score_management/update_status_edit'; ?>",
+                    data: {
+                        'grp_id': grp_id,
+                        'grp_status_edit': '1'
+                    },
+                    dataType: "JSON",
+                    success: function(data) {
+                        console.log(data.status)
+                        location.reload();
+                    } //if
+                });
+                }
             }
         });
     });
+    $(document).ready(function() {
+        var b = document.querySelector("select");
+        //b.setAttribute("value", "1");
+        //$('#round').on('change', function() {
+            var round = document.getElementById("round").value;
+            var grp_id = $("#round").attr("data-grp_id");
+            console.log(round)
+            $.ajax({
+                type: "post",
+                url: "<?php echo site_url().'/Score_management/Score_management/get_round'; ?>",
+                data: {
+                    'grp_id': grp_id,
+                    'grd_round': '1'
+                },
+                dataType: "JSON",
+                success: function(data) {
+                    console.log("success")
+                }
+            });
+       // });
+    });
+
 </script>
 
 <h2>
@@ -100,7 +197,7 @@
     <div class="row">
         <div class="col">
             <h3>Detail Group <label for="cars" style="font-size : 20px;margin-left : 69%">Group Status:</label>
-                <button type="button" class="float-right on" style="text-align: center;" id="on" value="on">
+                <button type="button" class="float-right on" style="text-align: center;" id="on" value="on" data-grp_id="<?php echo $group[0]->grp_id ?>">
                     open
                     <!-- <i class="fas fa-circle" style="font-size:30px; "></i> -->
                 </button>
@@ -108,14 +205,14 @@
             <hr class="my-4" color="gray">
             <h4 class="mb-0">Group : <?php echo 'T' . $group[0]->grp_position_group ?>
                 <label for="cars" style="font-size : 20px;margin-left : 80%">Select Round :</label>
-                <select name="cars" class="form-control" id="cars">
-                    <option value="volvo">Round 1 </option>
-                    <option value="saab">Round 2 </option>
+                <select name="round" class="form-control" id="round" data-grp_id="<?php echo $group[0]->grp_id ?>">
+                    <option value="1" >Round 1 </option>
+                    <option value="2" >Round 2 </option>
                 </select>
                 </h5>
                 <h5 class="mb-0">Group Name : <?php echo $group[0]->asp_name ?></h5>
                 <h5 class="mb-0">Promote : <?php echo $group[0]->Position_name ?></h5>
-                <h5 class="mb-0">Date : <?php echo date("d/m/Y", strtotime($group[0]->grp_date)) ?></h5>
+                <h5 class="mb-0">Date : <?php echo date("d/m/Y", strtotime($as_group_date[0]->grd_date)) ?></h5>
                 <hr class="my-4" color="gray">
         </div>
 
@@ -225,7 +322,7 @@
                             </td>
                             <td>
                                 <div class="dropdown">
-                                    <input type="text" value="<?php echo count($nominee) ?>" id="round" hidden>
+                                    <input type="text" value="<?php echo count($nominee) ?>" id="num" hidden>
                                     <button type="button" class="btn btn-warning button_size" data-bs-toggle="modal" data-bs-target="#ModalAddGroup" id="info<?php echo $i+1 ?>" >
                                         <i class="fa fa-refresh" style="font-size:15px;"></i>
                                     </button>

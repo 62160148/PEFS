@@ -10,6 +10,8 @@
 <?php
 include_once("pefs_model.php");
 
+
+
 class Da_pef_score_management extends pefs_model
 {//class Da_pef_score_management
 
@@ -68,4 +70,21 @@ class Da_pef_score_management extends pefs_model
         WHERE nom.grn_grp_id = ? AND nom.grn_emp_id=?";
         $this->db->query($sql, array($this->grn_status, $this->grn_grp_id, $this->grn_emp_id));
     }//end update_pass
+
+    /*
+    * update_pass
+    * update data for summary
+    * @input    -
+    * @output   -
+    * @author   Niphat Kuhoksiw
+    * @Create Date 2565-04-10
+    * @Update Date 2565-04-14
+    */
+    public function update_status_edit()
+    {//update_grn_status
+        $sql = " UPDATE pefs_database.pef_group as up
+        SET  up.grp_status_edit = ? 
+        WHERE up.grp_id = ? ";
+        $this->db->query($sql, array($this->grp_status_edit, $this->grp_id));
+    }//end update_grn_status
 }//end class Da_pef_score_management
