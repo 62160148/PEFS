@@ -152,10 +152,25 @@ class M_pef_employee extends Da_pef_employee
     public function get_position()
     {
         $sql =
-            "SELECT *
-                FROM dbmc.position WHERE position_level_id=?
+        "SELECT *
+                FROM pefs_database.pef_assessor_promote AS pro
+                INNER JOIN pefs_database.pef_assessor_position AS position
+                ON pro.asp_id = position.gap_asp_id
+                INNER JOIN dbmc.position AS pos
+                ON position.gap_promote = pos.Position_ID
+                WHERE pro.asp_level=?
        ";
-        $query = $this->db->query($sql, array($this->position_level_id));
+        $query = $this->db->query($sql, array($this->asp_level));
+        // $query = $this->db->query($sql, array());
+        return $query;
+    }
+    public function get_group_level()
+    {
+        $sql =
+            "SELECT *
+                FROM pefs_database.pef_assessor_promote 
+       ";
+        $query = $this->db->query($sql, array());
         // $query = $this->db->query($sql, array());
         return $query;
     }
@@ -169,6 +184,16 @@ class M_pef_employee extends Da_pef_employee
         // $query = $this->db->query($sql, array());
         return $query;
     }
+    public function get_position_name()
+    {
+        $sql =
+            "SELECT *
+                FROM dbmc.position WHERE Position_ID=?
+       ";
+        $query = $this->db->query($sql, array($this->Position_ID));
+        // $query = $this->db->query($sql, array());
+        return $query;
+    }
     public function get_assessor_by_year()
     {
         $sql =
@@ -177,5 +202,16 @@ class M_pef_employee extends Da_pef_employee
        ";
         $query = $this->db->query($sql, array($this->ase_year));
         return $query;
-    } 
+    }
+    function get_asp_id()
+    {
+
+        $sql =
+            "SELECT gro_asp_id
+             FROM pefs_database.pef_group_assessor 
+             WHERE gro_grp_id=?
+       ";
+        $query = $this->db->query($sql, array($this->gro_grp_id));
+        return $query;
+    }
 }//end class M_pef_group 

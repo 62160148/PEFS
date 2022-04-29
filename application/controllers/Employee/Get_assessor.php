@@ -28,7 +28,12 @@ class Get_assessor extends MainController
      * map to /index.php/welcome/<method_name>
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
-
+    function get_group_level()
+    {
+        $this->load->model('M_pef_employee', 'emp');
+        $data = $this->emp->get_group_level()->result();
+        echo json_encode($data);
+    }
     /*
 	* get_nominee_by_id
 	* search nominee detail by group

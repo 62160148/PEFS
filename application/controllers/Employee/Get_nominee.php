@@ -28,7 +28,13 @@ class Get_nominee extends MainController
      * map to /index.php/welcome/<method_name>
      * @see https://codeigniter.com/user_guide/general/urls.html
      */
-
+    function get_position_name()
+    {
+        $this->load->model('M_pef_employee', 'emp');
+        $this->emp->Position_ID = $this->input->post('pos_id');
+        $data = $this->emp->get_position_name()->result();
+        echo json_encode($data);
+    }
     /*
 	* search_by_employee_id
 	* search employee detail by emp_id
@@ -94,7 +100,7 @@ class Get_nominee extends MainController
     {
         $position_level_id = $this->input->post('position_level_id');
         $this->load->model('M_pef_employee', 'emp');
-        $this->emp->position_level_id = $position_level_id;
+        $this->emp->asp_level = $position_level_id;
         $data = $this->emp->get_position()->result();
         // echo $data['assessor'];
         echo json_encode($data);

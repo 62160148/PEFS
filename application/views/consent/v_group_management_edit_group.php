@@ -84,6 +84,7 @@ date_default_timezone_set("Asia/Bangkok");
     <div class="card-header">
         <h2>Group Management (การแก้ไขกลุ่มการประเมิน)</h2>
         <input type="text" id="old_id" value="<?php echo $id ?>" hidden>
+        <input type="text" id="gro_asp_id" value="<?php echo $asp_id ?>" hidden>
     </div>
     <div class="col-12">
         <div class="card mb-4">
@@ -98,11 +99,7 @@ date_default_timezone_set("Asia/Bangkok");
                                         <select id="group_position" name="year" class="form-control"
                                             onchange="get_position(),change_type(),change_button_status(),get_position_to_promote(),change_date()">
                                             <option value="-1">Please select level</option>
-                                            <option value="6">T6</option>
-                                            <option value="5">T5</option>
-                                            <option value="4">T4</option>
-                                            <option value="3">T3</option>
-                                            <option value="2">T2</option>
+
 
                                         </select>
                                     </label>
@@ -246,7 +243,6 @@ date_default_timezone_set("Asia/Bangkok");
 
                                             <th style="text-align:center">Employee ID</th>
                                             <th style="text-align:center">Nominee Name</th>
-                                            <th style="text-align:center">Position</th>
                                             <th style="text-align:center">Department</th>
                                             <th style="text-align:center">Promote to</th>
                                             <th style="text-align:center">Action</th>
@@ -315,7 +311,41 @@ date_default_timezone_set("Asia/Bangkok");
                 }
 
             }
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>Employee/Get_assessor/get_group_level ",
+                data: {},
+                dataType: "JSON",
+                success: function(data, status) {
+                    console.log(data);
+                    var id = document.getElementById("gro_asp_id").value
+                    console.log("id =" + id)
+                    data.forEach((row, index) => {
+                        if (id == row.asp_level) {
+                            var x = document.getElementById("group_position");
+                            var option = document.createElement("option");
+                            option.text = row.asp_name;
+                            option.value = row.asp_level;
+                            option.selected = true;
+                            x.add(option);
+                            console.log("id =" + id)
+                        } else {
+                            var x = document.getElementById("group_position");
+                            var option = document.createElement("option");
+                            option.text = row.asp_name;
+                            option.value = row.asp_level;
+                            x.add(option);
+                            console.log("id =" + 4)
+                        }
 
+                        change_button_status()
+                        change_type()
+                        change_date()
+                        get_assessor()
+                    })
+
+                }
+            });
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url(); ?>Employee/Get_assessor/get_assessor_by_group ",
@@ -358,13 +388,10 @@ date_default_timezone_set("Asia/Bangkok");
                         data_row += row.Empname_eng + " " + row
                             .Empsurname_eng +
                             '</td>';
-                        data_row += '<td style="text-align:center">' + row.Position_name
-                        // data_row += '<input id="pos" name="pos" value="' + pos_id + '">';
-                        data_row += '</td>';
                         data_row += '<td style="text-align:center">' + row.Department +
                             '</td>';
                         data_row += '<td style="text-align:center" id="Promote_' + num +
-                            '">' + row.grn_promote_to + '</td>';
+                            '">' + row.Position_name + '</td>';
                         data_row += '<td style="text-align:center"> ' +
                             '<button class="btn btn-danger" onclick = "remove_row(' + num +
                             ') " >delete</button></td>';
@@ -385,9 +412,6 @@ date_default_timezone_set("Asia/Bangkok");
             change_type()
             change_date()
             get_assessor()
-
-
-
         });
         </script>
         <script>
@@ -466,23 +490,38 @@ date_default_timezone_set("Asia/Bangkok");
             var data_row = "";
             //pos_id = get_position_id(promote);
             //console.log(pos_id);
-            data_row += '<tr id="emp_' + num + '">';
-            data_row += '<td id="Emp_id_' + num + '" style="text-align:center">' + empid + '</td>';
-            data_row += '<td style="text-align:center" >' + empname + '</td>';
-            data_row += '<td style="text-align:center">' + position;
-            // data_row += '<input id="pos" name="pos" value="' + pos_id + '">';
-            data_row += '</td>';
-            data_row += '<td style="text-align:center">' + department + '</td>';
-            data_row += '<td style="text-align:center" id="Promote_' + num + '">' + promote + '</td>';
-            data_row += '<td style="text-align:center"> ' +
-                '<button class="btn btn-danger" onclick = "remove_row(' + num +
-                ') " >delete</button></td>';
-            index_emp.push(num);
-            console.log(index_emp);
-            count_nominee++;
-            num++
-            $("#nominee_data").html(data_row);
-            console.log(count_nominee);
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>Employee/Get_nominee/get_position_name ",
+                data: {
+                    'pos_id': promote
+                },
+                dataType: "JSON",
+                success: function(data, status) {
+                    console.log(data);
+                    data.forEach((row, index) => {
+                        data_row += '<tr id="emp_' + num + '">';
+                        data_row += '<td id="Emp_id_' + num +
+                            '" style="text-align:center">' + empid + '</td>';
+                        data_row += '<td style="text-align:center" >' + empname + '</td>';
+                        data_row += '<td style="text-align:center">' + department + '</td>';
+                        data_row += '<td style="text-align:center" id="Promote_' + num +
+                            '">' + row.Position_name;;
+                        data_row += '<input type="text" id="Pro_' + num + '" value="' +
+                            promote + '" hidden >'
+                        data_row += '</td>'
+                        data_row += '<td style="text-align:center"> ' +
+                            '<button class="btn btn-danger" onclick = "remove_row(' + num +
+                            ') " >delete</button></td>';
+                        index_emp.push(num);
+                        console.log(index_emp);
+                        count_nominee++;
+                        num++
+                        $("#nominee_data").append(data_row);
+                        console.log(count_nominee);
+                    })
+                }
+            });
 
         });
 
@@ -514,7 +553,7 @@ date_default_timezone_set("Asia/Bangkok");
             var ass_year = document.getElementById("year").value;
             var ass_pos = document.getElementById("group_position").value;
             //var section = document.getElementById("group_position").value;
-            console.log(ass_year)
+            console.log("ass_year")
 
             //$("#select_data").remove();
             document.getElementById("select_data").innerHTML = "";
@@ -527,6 +566,7 @@ date_default_timezone_set("Asia/Bangkok");
                 },
                 dataType: "JSON",
                 success: function(data, status) {
+                    console.log(data)
                     document.getElementById("group_name").value = data[0].ase_asp_id
                     console.log(data[0].ase_asp_id);
                     var count_index = 0;
@@ -540,8 +580,6 @@ date_default_timezone_set("Asia/Bangkok");
                         data_row += '</td>'
                         data_row += '<td style="text-align:center">'
                         emp_as.forEach((row_as, index) => {
-
-
                             console.log(row.ase_emp_id)
                             console.log(row_as)
                             console.log(Object.is(Number(row_as), Number(row.ase_emp_id)))
@@ -640,6 +678,7 @@ date_default_timezone_set("Asia/Bangkok");
          */
         function get_position() {
             // $("#position_list").empty();
+            get_assessor()
             position_level_id = document.getElementById('group_position').value;
             document.getElementById("position_list").innerHTML = "";
             var empname = "";
@@ -729,7 +768,9 @@ date_default_timezone_set("Asia/Bangkok");
          * *This function is called when the user changes the position level.*
          */
         function change_type() {
+
             position_level_id = document.getElementById('group_position').value;
+            console.log("position_level_id =" + position_level_id)
             if (position_level_id < 5) {
                 document.getElementById("type_evaluation").value = "Type 2: (2 round evaluation)";
             } else {
@@ -816,7 +857,7 @@ date_default_timezone_set("Asia/Bangkok");
                 for (var i = 0; i < document.getElementById("nominee_data").rows.length; i++) {
                     console.log(index_emp[i]);
                     emp_nominee.push(document.getElementById('Emp_id_' + index_emp[i]).innerHTML)
-                    promote.push(document.getElementById('Promote_' + index_emp[i]).innerHTML)
+                    promote.push(document.getElementById('Pro_' + index_emp[i]).value)
                     //pos_id.push(document.getElementById('pos_' + index_emp[i]).value)
                     console.log(444)
                 }
