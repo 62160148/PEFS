@@ -279,10 +279,10 @@ th
                                         <td>Total</td>
                                             <!-- total round 1 -->
                                             <td style="text-align: center;"><?php echo $total_round_1;?></td>
-                                            <td style="text-align: center;"><?php echo (int)($total_round_1 * 100/$weight);?>%</td>
+                                            <td style="text-align: center;"><?php echo number_format( $total_round_1 * 100/$weight,2);?>%</td>
                                             <!-- total round 2 -->
                                             <td style="text-align: center;"><?php echo $total_round_2;?></td>
-                                            <td style="text-align: center;"><?php echo (int)($total_round_2 * 100/$weight);?>%</td>
+                                            <td style="text-align: center;"><?php echo  number_format( $total_round_2 * 100/$weight,2);?>%</td>
                                                 
                                     </tr>
                                     <tr>

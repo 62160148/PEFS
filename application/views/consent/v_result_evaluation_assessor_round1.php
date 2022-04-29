@@ -125,7 +125,7 @@ th
                     
                     <h6>Date : 
                         <?php
-                            $newDate = date("d/m/Y", strtotime($obj_group[0]->grp_date));
+                            $newDate = date("d/m/Y", strtotime($arr_per[0]->per_date));
                             // echo $obj_group[0]->grp_date;
                             echo $newDate;
                         ?>
@@ -276,7 +276,7 @@ th
                                     </td>
                                     <!-- แสดงเปอร์เซ็นคะแนนรวมทั้งหมด -->
                                     <td align='center'>
-                                   <?php echo   (int)($total_weight/$total*100) ; ?>%
+                                   <?php echo  number_format( ($total_weight/$total*100) , 2) ;  ?>%
                                     </td>
                                 </tr>
                             </tbody>

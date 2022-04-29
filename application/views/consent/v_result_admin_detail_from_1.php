@@ -288,7 +288,7 @@ th
                                     </td>
                                     <!-- แสดงเปอร์เซ็นคะแนนรวมทั้งหมด -->
                                     <td align='center'>
-                                   <?php echo   (int)($total_weight/$total*100) ; ?>%
+                                   <?php echo  number_format( ($total_weight/$total*100) , 2) ; ?>%
                                     </td>
                                 </tr>
                             </tbody>

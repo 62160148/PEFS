@@ -133,7 +133,7 @@ th
                 </div>
                 <div class="col-sm-6">
                 <h6>Date : 
-                    <?php $newDate = date("d/m/Y", strtotime($obj_date[0]->grd_date));
+                    <?php $newDate = date("d/m/Y", strtotime($arr_per[0]->per_date));
                         echo $newDate;
                         // echo $obj_group[0]->grp_date
                     ?>
@@ -277,12 +277,12 @@ th
                                         <!-- total -->
                                         <td>Total</td>
                                             <!-- total round 1 -->
-                                            <td style="text-align: center;"><?php echo $total_round_1;?></td>
-                                            <td style="text-align: center;"><?php echo (int)($total_round_1 * 100/$weight);?>%</td>
+                                            <td style="text-align: center;"><?php echo $total_round_1   ;?></td>
+                                            <td style="text-align: center;"><?php echo  number_format( ($total_round_1 * 100/$weight) , 2) ;?>%</td>
                                             <!-- total round 2 -->
-                                            <td style="text-align: center;"><?php echo $total_round_2;?></td>
-                                            <td style="text-align: center;"><?php echo (int)($total_round_2 * 100/$weight);?>%</td>
-                                                
+                                            <td style="text-align: center;"><?php echo   $total_round_2   ;?></td>
+                                            <td style="text-align: center;"><?php echo  number_format( ($total_round_2 * 100/$weight) , 2) ;?>%</td>
+                                           
                                     </tr>
                                     <tr>
                                         <td>Judgement</td>
