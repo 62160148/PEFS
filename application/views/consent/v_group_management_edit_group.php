@@ -280,8 +280,6 @@ date_default_timezone_set("Asia/Bangkok");
             var ase_id = id;
             get_group_detail()
             get_position()
-            get_position_to_promote()
-
             promote = document.getElementById("promote_nominee").value;
             const d = new Date();
             $("#date2").hide();
@@ -342,6 +340,7 @@ date_default_timezone_set("Asia/Bangkok");
                         change_type()
                         change_date()
                         get_assessor()
+                        get_position_to_promote()
                     })
 
                 }
@@ -406,12 +405,13 @@ date_default_timezone_set("Asia/Bangkok");
                     // $("#nominee_data").html(data_row)
                 }
             })
-            // get_assessor().call()
-
             change_button_status()
             change_type()
             change_date()
             get_assessor()
+
+            get_position_to_promote()
+
         });
         </script>
         <script>
@@ -713,6 +713,7 @@ date_default_timezone_set("Asia/Bangkok");
         function get_position_to_promote() {
             $("#promote_nominee").empty();
             position_level_id = document.getElementById('group_position').value;
+            console.log("position_level_id =" + position_level_id)
             var empname = "";
             const num = position_level_id;
             position_level_id = position_level_id - 1;
