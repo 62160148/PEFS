@@ -117,7 +117,7 @@
                             </div>
                             <div class="col-6 text-end">
                                 <!-- Select Year -->
-                                <div>
+                                <!-- <div>
                                     <label for="year" style="position: absolute; right: 0;font-size:16px;">Select Year:
                                         <select id="year" name="year">
                                             <option>2021</option>
@@ -129,7 +129,7 @@
                                             <option value="2022">2022</option>
                                         </select>
                                     </label><br><br>
-                                </div>
+                                </div> -->
 
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn bg-gradient-info btn-block mb-3" data-bs-toggle="modal" data-bs-target="#ModalAddAssessor">
