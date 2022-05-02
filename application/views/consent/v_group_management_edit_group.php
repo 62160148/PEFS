@@ -390,7 +390,9 @@ date_default_timezone_set("Asia/Bangkok");
                         data_row += '<td style="text-align:center">' + row.Department +
                             '</td>';
                         data_row += '<td style="text-align:center" id="Promote_' + num +
-                            '">' + row.Position_name + '</td>';
+                            '">' + row.Position_name ;
+                        data_row += '<input type="text" id="Pro_' + num + '" value="' +
+                        row.grn_promote_to + '" hidden>'
                         data_row += '<td style="text-align:center"> ' +
                             '<button class="btn btn-danger" onclick = "remove_row(' + num +
                             ') " >delete</button></td>';
@@ -453,10 +455,8 @@ date_default_timezone_set("Asia/Bangkok");
                         'Your data has been Saved.',
                         'success'
                     )
-
                     save_data();
                     //window.location.href = "show_group_management";
-
                 } else if (
                     /* Read more about handling dismissals below */
                     result.dismiss === Swal.DismissReason.cancel
@@ -506,9 +506,9 @@ date_default_timezone_set("Asia/Bangkok");
                         data_row += '<td style="text-align:center" >' + empname + '</td>';
                         data_row += '<td style="text-align:center">' + department + '</td>';
                         data_row += '<td style="text-align:center" id="Promote_' + num +
-                            '">' + row.Position_name;;
+                            '">' + row.Position_name;
                         data_row += '<input type="text" id="Pro_' + num + '" value="' +
-                            promote + '" hidden >'
+                            promote + '" hidden>'
                         data_row += '</td>'
                         data_row += '<td style="text-align:center"> ' +
                             '<button class="btn btn-danger" onclick = "remove_row(' + num +
@@ -856,7 +856,7 @@ date_default_timezone_set("Asia/Bangkok");
                     }
                 }
                 for (var i = 0; i < document.getElementById("nominee_data").rows.length; i++) {
-                    console.log(index_emp[i]);
+                    console.log("ex=",index_emp[i]);
                     emp_nominee.push(document.getElementById('Emp_id_' + index_emp[i]).innerHTML)
                     promote.push(document.getElementById('Pro_' + index_emp[i]).value)
                     //pos_id.push(document.getElementById('pos_' + index_emp[i]).value)
