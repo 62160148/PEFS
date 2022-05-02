@@ -41,9 +41,9 @@ class Group_management extends MainController
         $this->load->model('M_pef_employee', 'emp');
         $this->emp->gro_grp_id = $id;
         $data['asp_id'] = $this->emp->get_asp_id()->result();
-        print_r($data['asp_id']);
+        // print_r($data['asp_id']);
         $data['asp_id'] = $data['asp_id'][0]->gro_asp_id;
-        echo $data['asp_id'];
+        // echo $data['asp_id'];
         $this->output('consent/v_group_management_edit_group', $data);
         //$this->output('consent/v_group_management_add_group');
     }
