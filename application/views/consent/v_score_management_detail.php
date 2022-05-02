@@ -221,7 +221,7 @@
             </h4>
                 <h5 class="mb-0">Group Name : <?php echo $group[0]->asp_name ?></h5>
                 <h5 class="mb-0">Promote : <?php echo $group[0]->Position_name ?></h5>
-                <h5 class="mb-0">Date : <?php echo date("d/m/Y", strtotime($as_group_date[0]->grd_date)) ?></h5>
+                <h5 class="mb-0">Date : <?php echo date("d/m/Y", strtotime($group[0]->grp_date)) ?></h5>
                 <hr class="my-4" color="gray">
         </div>
 
