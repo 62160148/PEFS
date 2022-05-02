@@ -190,10 +190,11 @@
 
 </script>
 
-<h2>
-    Score Management Group (การจัดการคะแนนกลุ่ม)
-</h2>
+
 <div class="card-header" id="card_radius">
+    <h2>
+        Score Management Group (การจัดการคะแนนกลุ่ม)
+    </h2>
     <div class="row">
         <div class="col">
             <h3>Detail Group <label for="cars" style="font-size : 20px;margin-left : 69%">Group Status:</label>
@@ -209,7 +210,7 @@
                     <option value="1" >Round 1 </option>
                     <option value="2" >Round 2 </option>
                 </select>
-                </h5>
+            </h4>
                 <h5 class="mb-0">Group Name : <?php echo $group[0]->asp_name ?></h5>
                 <h5 class="mb-0">Promote : <?php echo $group[0]->Position_name ?></h5>
                 <h5 class="mb-0">Date : <?php echo date("d/m/Y", strtotime($as_group_date[0]->grd_date)) ?></h5>
