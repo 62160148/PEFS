@@ -228,7 +228,7 @@
                         <th scope="col" class="sort" data-sort="status">Status</th>
                         <th scope="col">Assessor</th>
                         <th scope="col" class="sort" data-sort="completion">Summary Score</th>
-                        <th scope="col">Action</th>
+                        <!-- <th scope="col">Action</th> -->
                     </tr>
                 </thead>
                 <tbody class="list text-center">
@@ -320,14 +320,14 @@
                                         </div>
                                     <?php } ?>
                             </td>
-                            <td>
+                            <!-- <td>
                                 <div class="dropdown">
                                     <input type="text" value="<?php echo count($nominee) ?>" id="num" hidden>
                                     <button type="button" class="btn btn-warning button_size" data-bs-toggle="modal" data-bs-target="#ModalAddGroup" id="info<?php echo $i+1 ?>" >
                                         <i class="fa fa-refresh" style="font-size:15px;"></i>
                                     </button>
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
                         <div class="modal fade" id="ModalAddGroup" tabindex="-1" role="dialog" aria-labelledby="ModalAddGroupTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
