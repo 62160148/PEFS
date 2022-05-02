@@ -143,7 +143,7 @@
                                                         echo '-';
                                                         echo ' ' . $arr_group[$i]->Position_name;
                                                         echo "<br/>";
-                                                        ?>
+                                                    ?>
                                                 </h6>
                                             </div>
                                         </td>
