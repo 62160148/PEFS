@@ -164,6 +164,25 @@ class M_pef_employee extends Da_pef_employee
         // $query = $this->db->query($sql, array());
         return $query;
     }
+
+/* get_position_assessor
+* get section detail from database
+* @input Position_Level
+* @output section detail
+* @author Apinya Phadungkit
+* @Create Date 2565-5-2
+*/
+    public function get_position_assessor()
+    {
+        $sql =
+            "SELECT *
+                FROM dbmc.position WHERE position_level_id=?
+       ";
+        $query = $this->db->query($sql, array($this->position_level_id));
+        // $query = $this->db->query($sql, array());
+        return $query;
+    }
+
     public function get_group_level()
     {
         $sql =

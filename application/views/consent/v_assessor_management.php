@@ -363,7 +363,7 @@ function get_position() {
     console.log(position_level_id)
     $.ajax({
         type: "POST",
-        url: "<?php echo base_url(); ?>Employee/Get_nominee/get_position ",
+        url: "<?php echo base_url(); ?>Employee/Get_nominee/get_position_assessor ",
         data: {
             "position_level_id": position_level_id,
         },

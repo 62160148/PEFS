@@ -122,5 +122,23 @@ class Get_nominee extends MainController
         print_r($data);
         echo json_encode($data);
     }
+
+    /*
+	* get_position
+	* search nominee detail by group
+	* @input group id
+	* @output nominee detail
+	* @author Apinya Phadungkit
+	* @Create Date 2565-5-2
+	*/
+    function get_position_assessor()
+    {
+        $position_level_id = $this->input->post('position_level_id');
+        $this->load->model('M_pef_employee', 'emp');
+        $this->emp->position_level_id = $position_level_id;
+        $data = $this->emp->get_position_assessor()->result();
+        // echo $data['assessor'];
+        echo json_encode($data);
+    }
 }
 // 
