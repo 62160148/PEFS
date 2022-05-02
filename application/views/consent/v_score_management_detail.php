@@ -198,10 +198,18 @@
     <div class="row">
         <div class="col">
             <h3>Detail Group <label for="cars" style="font-size : 20px;margin-left : 69%">Group Status:</label>
+            <?php if($group[0]->grp_status_edit == 1){ 
+                ?>
                 <button type="button" class="float-right on" style="text-align: center;" id="on" value="on" data-grp_id="<?php echo $group[0]->grp_id ?>">
-                    open
-                    <!-- <i class="fas fa-circle" style="font-size:30px; "></i> -->
-                </button>
+                open
+                <!-- <i class="fas fa-circle" style="font-size:30px; "></i> -->
+            </button>
+            <?php }else if($group[0]->grp_status_edit == 2||$group[0]->grp_status_edit == 3){
+                ?>
+                <button type="button" class="float-right off" style="text-align: center;" id="on" value="on" data-grp_id="<?php echo $group[0]->grp_id ?>">
+                close
+            <?php } ?>
+                
             </h3>
             <hr class="my-4" color="gray">
             <h4 class="mb-0">Group : <?php echo 'T' . $group[0]->grp_position_group ?>
