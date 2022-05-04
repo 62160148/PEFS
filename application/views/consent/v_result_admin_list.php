@@ -97,7 +97,7 @@
                             </td>
                      
                             <td>
-                            <?php if(count($arr_group)<2) { ?>
+                            <?php if(count($arr_group)<2 ||$i==count($arr_group)-1) { ?>
                                 <?  ?>  
                                                    
                                                    <?php $newDate = date("d/m/Y", strtotime($arr_group[$i]->grd_date)); ?>
