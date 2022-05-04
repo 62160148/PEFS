@@ -48,35 +48,6 @@
                 </h6>
                 <hr class="my-4" color="gray">
 
-                <?php
-                $sum_point = 0;
-                $point_total = [];
-                $check_emp = '';
-                $point_ass = [];
-                $total = [];
-                $get = [];
-                foreach ($ass_data as $index_ass => $row_ass) {
-                    foreach ($point_data as $index => $row) {
-                        if ($row_ass->ase_id == $row->per_ase_id) {
-                            $sum_point += intval($row->ptf_point);
-                        }
-                        //if 
-                    }
-                    //for each point_data
-                    if ($sum_point != 0) {
-                        array_push($point_total, $sum_point);
-                    } else {
-                        array_push($point_total, 0);
-                    }
-                    $sum_point = 0;
-                }
-                //for each ass_data
-                array_push($point_ass, $point_total);
-                array_push($total, (sizeof($point_data) * 5));
-                array_push($get, array_sum($point_total));
-                $point_total = [];
-                ?>
-
                 <h5 style="text-align:left">
                     <b>Assessors : </b><?php echo $i = count($ass_data); ?> person
                 </h5>
@@ -106,7 +77,7 @@
                                                 <td><?php echo $num++; ?></td>
                                                 <td><?php echo $ass_data[$i]->ase_emp_id; ?></td>
                                                 <td><?php echo $ass_data[$i]->Empname_eng . ' ' . $ass_data[$i]->Empsurname_eng; ?></td>
-                                                <td><?php echo $point_ass[$index_point][$i]; ?> points</td>
+                                                <td><?php echo $point_data_only[$i]->point; ?> points</td>
                                                 <td><?php echo $point_data[$i]->per_comment; ?></td>
                                                 <td><?php echo $point_data[$i]->per_q_and_a; ?></td>
                                             </tr>
@@ -122,9 +93,9 @@
                     <?php
                     $index_point = 0;
                     ?>
-                    <b>Totally score : </b><?php echo  $total[$index_point]; ?> points<br><br>
-                    <b>Get score : </b><?php echo $get[$index_point]; ?> points<br><br>
-                    <?php $percent = $get[$index_point] * 100 / $total[$index_point]; ?>
+                    <b>Totally score : </b><?php echo  $point_data_only[0]->sum_total; ?> points<br><br>
+                    <b>Get score : </b><?php echo $point_data_only[0]->point; ?> points<br><br>
+                    <?php $percent = $point_data_only[0]->point * 100 / $point_data_only[0]->sum_total; ?>
                     <b>Total score : </b><?php echo number_format($percent, 2, '.', ''); ?> %<br><br>
                     <?php
                     if ($percent >= 60) {
@@ -184,7 +155,7 @@
                                     <td><?php echo $ass_data[$i]->Empname_eng . ' ' . $ass_data[$i]->Empsurname_eng; ?></td>
                                     <td><?php echo $ass_data[$i]->sec_name; ?></td>
 
-                                    <?php $percent = $get[$index_point] * 100 / $total[$index_point]; ?>
+                                    <?php $percent = $point_data_only[$i]->point * 100 / $point_data_only[$i]->sum_total; ?>
                                     <td><?php echo number_format($percent, 2, '.', ''); ?> %</td>
                                     <?php
                                     if ($percent >= 60) {

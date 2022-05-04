@@ -50,10 +50,44 @@ class M_pef_point_form extends Da_pef_point_form
                 ON grp.grp_id = grn.grn_grp_id
                 INNER JOIN pefs_database.pef_section AS sec
                 ON sec.sec_level = grp.grp_position_group
+                INNER JOIN pefs_database.pef_format_form AS pff
+                ON poi.ptf_for_id = pff.for_id
+ 				INNER JOIN pefs_database.pef_description_form AS pdf
+                ON pff.for_des_id = pdf.des_item_id
                 WHERE sec.sec_id = ?";
         $query = $this->db->query($sql, array($this->sec_id));
         return $query;
     }
+
+    /*
+    * get_data_point_only
+    * get data point_form, nominee, group
+    * @input    id
+    * @output   get data point_form, nominee, group
+    * @author   Chakrit
+    * @Create Date 2565-04-10
+    * @Update Date 2565-04-14
+    */
+    public function get_data_point_only()
+    {
+        $sql = "SELECT sum(ptf_point*des_weight) AS point,grn_emp_id,sum((ptf_per_id*5)*des_weight) AS sum_total
+           FROM pefs_database.pef_point_form AS poi
+                INNER JOIN pefs_database.pef_performance_form AS pfm
+                ON poi.ptf_per_id = pfm.per_id
+                INNER JOIN pefs_database.pef_group_nominee AS grn
+                ON pfm.per_emp_id = grn.grn_emp_id
+                INNER JOIN pefs_database.pef_group AS grp
+                ON grp.grp_id = grn.grn_grp_id
+                INNER JOIN pefs_database.pef_section AS sec
+                ON sec.sec_level = grp.grp_position_group
+                INNER JOIN pefs_database.pef_format_form AS pff
+                ON poi.ptf_for_id = pff.for_id
+ 				INNER JOIN pefs_database.pef_description_form AS pdf
+                ON pff.for_des_id = pdf.des_item_id
+                WHERE sec.sec_id = ?";
+        $query = $this->db->query($sql, array($this->sec_id));
+        return $query;
+    }//คืนค่าคะแนนโดยกลุ่มไอดี
 
     /* Report
     * get_data_point_by_nor_id
@@ -75,10 +109,44 @@ class M_pef_point_form extends Da_pef_point_form
                 ON grp.grp_id = grn.grn_grp_id
                 INNER JOIN pefs_database.pef_section AS sec
                 ON sec.sec_level = grp.grp_position_group
+                INNER JOIN pefs_database.pef_format_form AS pff
+                ON poi.ptf_for_id = pff.for_id
+ 				INNER JOIN pefs_database.pef_description_form AS pdf
+                ON pff.for_des_id = pdf.des_item_id
                 WHERE grn.grn_id = ?";
         $query = $this->db->query($sql, array($this->grn_id));
         return $query;
     }
+
+    /*
+    * get_data_point_by_nor_id_only
+    * get data point_form, nominee, group
+    * @input    id
+    * @output   get data point_form, nominee, group
+    * @author   Chakrit
+    * @Create Date 2565-04-10
+    * @Update Date 2565-04-14
+    */
+    public function get_data_point_by_nor_id_only()
+    {
+        $sql = "SELECT sum(ptf_point*des_weight) AS point,grn_emp_id,sum((ptf_per_id*5)*des_weight) AS sum_total
+           FROM pefs_database.pef_point_form AS poi
+                INNER JOIN pefs_database.pef_performance_form AS pfm
+                ON poi.ptf_per_id = pfm.per_id
+                INNER JOIN pefs_database.pef_group_nominee AS grn
+                ON pfm.per_emp_id = grn.grn_emp_id
+                INNER JOIN pefs_database.pef_group AS grp
+                ON grp.grp_id = grn.grn_grp_id
+                INNER JOIN pefs_database.pef_section AS sec
+                ON sec.sec_level = grp.grp_position_group
+                INNER JOIN pefs_database.pef_format_form AS pff
+                ON poi.ptf_for_id = pff.for_id
+ 				INNER JOIN pefs_database.pef_description_form AS pdf
+                ON pff.for_des_id = pdf.des_item_id
+                WHERE grn.grn_id = ?";
+        $query = $this->db->query($sql, array($this->grn_id));
+        return $query;
+    }//คืนค่าคะแนนโดยกลุ่มไอดี
 
     /*
 	* get_point_list

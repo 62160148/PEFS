@@ -90,7 +90,7 @@
         foreach ($ass_data as $index_ass => $row_ass) {
             foreach ($point_data as $index => $row) {
                 if ($row_ass->ase_id == $row->per_ase_id && $row_emp->grn_emp_id == $row->per_emp_id) {
-                    $sum_point += intval($row->ptf_point);
+                    $sum_point += intval($row->ptf_point*$row->des_weight);
                 }
                 //if 
             }
@@ -105,7 +105,6 @@
         //for each ass_data
         if ($row_emp->grn_status_done > -1) {
             array_push($point_emp, $point_total);
-            array_push($total, ((sizeof($point_data) * 5) / sizeof($sec_data)));
             array_push($get, array_sum($point_total));
         }
         $point_total = [];
@@ -159,9 +158,9 @@
                                             <td><?php echo $point_emp[$index_point][$index_ass]; ?></td>
                                         <?php } ?>
                                         
-                                        <td><?php echo $total[$index_point]; ?></td>
+                                        <td><?php echo $point_data_only[$i]->sum_total; ?></td>
                                         <td><?php echo $get[$index_point]; ?></td>
-                                        <?php $percent = ($get[$index_point] * 100) / ($total[$index_point]); ?>
+                                        <?php $percent = ($get[$index_point] * 100) / ($point_data_only[$i]->sum_total); ?>
                                         <td><?php echo number_format($percent, 2, '.', ''); ?> %</td>
                                         <?php
                                         if ($sec_data[$i]->grn_status_result == '1') {

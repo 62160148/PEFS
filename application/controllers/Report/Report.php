@@ -90,6 +90,7 @@ class Report extends MainController
         $data['sec_data'] = $this->grp->get_data_by_id()->result();
         $data['ass_data'] = $this->sec->get_ass_by_sec_id()->result();
         $data['point_data'] = $this->ptf->get_data_point()->result();
+        $data['point_data_only'] = $this->ptf->get_data_point_only()->result();
 
         $data['count'] = '';
         for ($i = 0; $i < count($data['sec_data']); $i++) {
@@ -125,6 +126,7 @@ class Report extends MainController
         $data['emp_data'] = $this->grp->get_emp_by_id()->row();
         $data['ass_data'] = $this->sec->get_ass_by_nor_id()->result();
         $data['point_data'] = $this->ptf->get_data_point_by_nor_id()->result();
+        $data['point_data_only'] = $this->ptf->get_data_point_by_nor_id_only()->result();
         $this->output('consent/v_report_person', $data);
     }
 

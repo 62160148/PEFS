@@ -242,10 +242,14 @@ class M_pef_score_management extends Da_pef_score_management
     */
     public function get_data_point_by_grp_id($id)
     {
-        $sql = "SELECT sum(ptf_point) AS point,grn_emp_id,count(ptf_for_id)*5 AS sum_total
+        $sql = "SELECT sum(ptf_point*des_weight) AS point,grn_emp_id,sum((ptf_per_id*5)*des_weight) AS sum_total
                 FROM pefs_database.pef_point_form AS poi
                 INNER JOIN pefs_database.pef_performance_form AS pfm
                 ON poi.ptf_per_id = pfm.per_id
+                INNER JOIN pefs_database.pef_format_form AS pff
+                ON poi.ptf_for_id = pff.for_id
+ 				INNER JOIN pefs_database.pef_description_form AS pdf
+                ON pff.for_des_id = pdf.des_item_id
                 INNER JOIN pefs_database.pef_group_nominee AS grn
                 ON pfm.per_emp_id = grn.grn_emp_id
                 INNER JOIN pefs_database.pef_group AS grp
