@@ -298,9 +298,9 @@
                                         $index_point = 0;
                                         ?>
 
-                                        <b>Totally score : </b><?php echo $point_data[$i]->sum_total ; ?> points<br>
+                                        <b>Totally score : </b><?php echo $point_data[$i]->total ; ?> points<br>
                                         <b>Get score : </b><?php echo $point_data[$i]->point; ?> points<br>
-                                        <?php $percent = $point_data[$i]->point * 100 / $point_data[$i]->sum_total; ?> 
+                                        <?php $percent = $point_data[$i]->point * 100 / $point_data[$i]->total; ?> 
                                         <div class="d-flex align-items-center" style="margin-left:18%;">
                                             <span class="completion"><?php echo number_format($percent, 2, '.', ''); ?>
                                                 %</span>

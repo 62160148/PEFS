@@ -91,6 +91,8 @@ class Report extends MainController
         $data['ass_data'] = $this->sec->get_ass_by_sec_id()->result();
         $data['point_data'] = $this->ptf->get_data_point()->result();
         $data['point_data_only'] = $this->ptf->get_data_point_only()->result();
+        $data['point'] = $this->ptf->get_data_point_by_sec_id()->result();
+        $data['total'] = $this->ptf->get_data_total_score_by_sec_id()->result();
 
         $data['count'] = '';
         for ($i = 0; $i < count($data['sec_data']); $i++) {
@@ -101,6 +103,14 @@ class Report extends MainController
             $data['count'][$i] = $num;
         }
 
+        for($i = 0; $i < count($data['sec_data']); $i++){
+            for($j = 0; $j < count($data['total']); $j++){
+                if($data['point'][$i]->grn_emp_id == $data['total'][$j]->grn_emp_id){
+                    $data['point'][$i]->total += $data['total'][$j]->total;
+                }
+            }
+        }
+        // print_r( $data['point']);
         $this->output('consent/v_report_group', $data);
     }
 
@@ -127,6 +137,16 @@ class Report extends MainController
         $data['ass_data'] = $this->sec->get_ass_by_nor_id()->result();
         $data['point_data'] = $this->ptf->get_data_point_by_nor_id()->result();
         $data['point_data_only'] = $this->ptf->get_data_point_by_nor_id_only()->result();
+        $data['point'] = $this->ptf->get_point_by_nor_id()->result();
+        $data['total'] = $this->ptf->get_data_total_score_by_nor_id()->result();
+
+        for($i = 0; $i < count($data['emp_data']); $i++){
+            for($j = 0; $j < count($data['total']); $j++){
+                if($data['point'][$i]->grn_emp_id == $data['total'][$j]->grn_emp_id){
+                    $data['point'][$i]->total += $data['total'][$j]->total;
+                }
+            }
+        }
         $this->output('consent/v_report_person', $data);
     }
 

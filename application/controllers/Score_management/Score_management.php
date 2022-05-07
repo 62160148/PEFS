@@ -57,7 +57,8 @@ class Score_management extends MainController
         $data['group'] = $this->pef->get_group_by_id($id)->result();
         $data['ass_data'] = $this->pef->get_ass_by_grp_id($id)->result();
         $data['point_data'] = $this->pef->get_data_point_by_grp_id($id)->result();
-
+        $data['total_score'] = $this->pef->get_data_total_score_by_grp_id($id)->result();
+        $total='';
         // $data['sec_data'] = $this->pef->get_data_by_id($id)->result();
 
         for ($i = 0; $i < count($data['nominee']); $i++) {
@@ -71,11 +72,20 @@ class Score_management extends MainController
             }
             $data['count'][$i] = $num;
         }
+
         for($i = 0; $i < count($data['nominee']); $i++){
-            if(empty($data['point_data'][$i]->point)&&empty($data['point_data'][$i]->sum_total)){
+            for($j = 0; $j < count($data['total_score']); $j++){
+                if($data['point_data'][$i]->grn_emp_id == $data['total_score'][$j]->grn_emp_id){
+                    $data['point_data'][$i]->total += $data['total_score'][$j]->total;
+                }
+            }
+        }
+
+        for($i = 0; $i < count($data['nominee']); $i++){
+            if(empty($data['point_data'][$i]->point)&&empty($data['point_data'][$i]->total)){
                 $percent = 0;
             }else{
-                $percent = $data['point_data'][$i]->point * 100 / $data['point_data'][$i]->sum_total;
+                $percent = $data['point_data'][$i]->point * 100 / $data['point_data'][$i]->total;
             }
             // echo $data['point_data'][$i]->percent;
             if($percent > 59 && $data['count'][$i] == count($data['assessor'])){
@@ -92,7 +102,8 @@ class Score_management extends MainController
             $this->grn->update_status_result();
             }
         }
-    
+        // print_r($data['point_data']);
+
         $this->output('consent/v_score_management_detail', $data);
     } //end show_score_management_detail
 

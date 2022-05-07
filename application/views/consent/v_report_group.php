@@ -81,6 +81,7 @@
 
     <?php
     $sum_point = 0;
+    $count = 0;
     $point_total = [];
     $check_emp = '';
     $point_emp = [];
@@ -105,6 +106,7 @@
         //for each ass_data
         if ($row_emp->grn_status_done > -1) {
             array_push($point_emp, $point_total);
+            // array_push($total, ($count * 5 * $row->des_weight));
             array_push($get, array_sum($point_total));
         }
         $point_total = [];
@@ -134,7 +136,6 @@
                                 <th scope="col">Get score</th>
                                 <th scope="col">Total score pass ≥ 60%</th>
                                 <th scope="col">Judgement</th>
-                                <th scope="col">Assessors</th>
                             </tr>
                         </thead>
                         <tbody id="data_table">
@@ -157,11 +158,12 @@
                                         foreach ($ass_data as $index_ass => $row_ass) { ?>
                                             <td><?php echo $point_emp[$index_point][$index_ass]; ?></td>
                                         <?php } ?>
-                                        
-                                        <td><?php echo $point_data_only[$i]->sum_total; ?></td>
-                                        <td><?php echo $get[$index_point]; ?></td>
-                                        <?php $percent = ($get[$index_point] * 100) / ($point_data_only[$i]->sum_total); ?>
+                                     
+                                        <td><?php echo $point[$i]->total; ?></td>
+                                        <td><?php echo $point[$i]->point; ?></td>
+                                        <?php $percent = ($point[$i]->point * 100) / ($point[$i]->total); ?>
                                         <td><?php echo number_format($percent, 2, '.', ''); ?> %</td>
+                            
                                         <?php
                                         if ($sec_data[$i]->grn_status_result == '1') {
                                             $Status = 'PASS'; ?>
@@ -170,7 +172,6 @@
                                             $Status = 'NOT PASS'; ?>
                                             <td><span style="color:red;"><?php echo $Status; ?></span></td>
                                         <?php } ?>
-                                        <td><?php echo $count[$i] ?>/<?php echo count($ass_data) ?></td>
                                     </tr>
                             <?php
                                     $index_point++;

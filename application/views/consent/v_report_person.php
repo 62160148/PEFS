@@ -93,9 +93,9 @@
                     <?php
                     $index_point = 0;
                     ?>
-                    <b>Totally score : </b><?php echo  $point_data_only[0]->sum_total; ?> points<br><br>
-                    <b>Get score : </b><?php echo $point_data_only[0]->point; ?> points<br><br>
-                    <?php $percent = $point_data_only[0]->point * 100 / $point_data_only[0]->sum_total; ?>
+                    <b>Totally score : </b><?php echo $point[0]->total; ?> points<br><br>
+                    <b>Get score : </b><?php echo $point[0]->point; ?> points<br><br>
+                    <?php $percent = $point[0]->point * 100 / $point[0]->total; ?>
                     <b>Total score : </b><?php echo number_format($percent, 2, '.', ''); ?> %<br><br>
                     <?php
                     if ($percent >= 60) {
@@ -155,7 +155,7 @@
                                     <td><?php echo $ass_data[$i]->Empname_eng . ' ' . $ass_data[$i]->Empsurname_eng; ?></td>
                                     <td><?php echo $ass_data[$i]->sec_name; ?></td>
 
-                                    <?php $percent = $point_data_only[$i]->point * 100 / $point_data_only[$i]->sum_total; ?>
+                                    <?php $percent =  $point[$i]->point * 100 / $point[$i]->total; ?>
                                     <td><?php echo number_format($percent, 2, '.', ''); ?> %</td>
                                     <?php
                                     if ($percent >= 60) {

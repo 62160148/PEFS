@@ -89,6 +89,48 @@ class M_pef_point_form extends Da_pef_point_form
         return $query;
     }//คืนค่าคะแนนโดยกลุ่มไอดี
 
+    public function get_data_point_by_sec_id()
+    {
+        $sql = "SELECT sum(ptf_point*des_weight) AS point,grn_emp_id,sum(ptf_point*0) AS total
+                FROM pefs_database.pef_point_form AS poi
+                INNER JOIN pefs_database.pef_performance_form AS pfm
+                ON poi.ptf_per_id = pfm.per_id
+                INNER JOIN pefs_database.pef_format_form AS pff
+                ON poi.ptf_for_id = pff.for_id
+ 				INNER JOIN pefs_database.pef_description_form AS pdf
+                ON pff.for_des_id = pdf.des_item_id
+                INNER JOIN pefs_database.pef_group_nominee AS grn
+                ON pfm.per_emp_id = grn.grn_emp_id
+                INNER JOIN pefs_database.pef_group AS grp
+                ON grp.grp_id = grn.grn_grp_id
+                INNER JOIN pefs_database.pef_section AS sec
+                ON sec.sec_level = grp.grp_position_group
+                WHERE sec.sec_id = ?
+                GROUP BY grn.grn_emp_id";
+        $query = $this->db->query($sql, array($this->sec_id));
+        return $query;
+    } //คืนค่าคะแนนโดยกลุ่มไอดี
+
+    public function get_data_total_score_by_sec_id()
+    {
+        $sql = "SELECT 5*des_weight AS total,grn_emp_id
+                FROM pefs_database.pef_point_form AS poi
+                INNER JOIN pefs_database.pef_performance_form AS pfm
+                ON poi.ptf_per_id = pfm.per_id
+                INNER JOIN pefs_database.pef_format_form AS pff
+                ON poi.ptf_for_id = pff.for_id
+ 				INNER JOIN pefs_database.pef_description_form AS pdf
+                ON pff.for_des_id = pdf.des_item_id
+                INNER JOIN pefs_database.pef_group_nominee AS grn
+                ON pfm.per_emp_id = grn.grn_emp_id
+                INNER JOIN pefs_database.pef_group AS grp
+                ON grp.grp_id = grn.grn_grp_id
+                INNER JOIN pefs_database.pef_section AS sec
+                ON sec.sec_level = grp.grp_position_group
+                WHERE sec.sec_id = ?";
+        $query = $this->db->query($sql, array($this->sec_id));
+        return $query;
+    } 
     /* Report
     * get_data_point_by_nor_id
     * get data point_form, nominee, group, section
@@ -148,6 +190,48 @@ class M_pef_point_form extends Da_pef_point_form
         return $query;
     }//คืนค่าคะแนนโดยกลุ่มไอดี
 
+    public function get_point_by_nor_id()
+    {
+        $sql = "SELECT sum(ptf_point*des_weight) AS point,grn_emp_id,sum(ptf_point*0) AS total
+                FROM pefs_database.pef_point_form AS poi
+                INNER JOIN pefs_database.pef_performance_form AS pfm
+                ON poi.ptf_per_id = pfm.per_id
+                INNER JOIN pefs_database.pef_format_form AS pff
+                ON poi.ptf_for_id = pff.for_id
+ 				INNER JOIN pefs_database.pef_description_form AS pdf
+                ON pff.for_des_id = pdf.des_item_id
+                INNER JOIN pefs_database.pef_group_nominee AS grn
+                ON pfm.per_emp_id = grn.grn_emp_id
+                INNER JOIN pefs_database.pef_group AS grp
+                ON grp.grp_id = grn.grn_grp_id
+                INNER JOIN pefs_database.pef_section AS sec
+                ON sec.sec_level = grp.grp_position_group
+                WHERE grn.grn_id = ?
+                GROUP BY grn.grn_emp_id";
+        $query = $this->db->query($sql, array($this->grn_id));
+        return $query;
+    } //คืนค่าคะแนนโดยกลุ่มไอดี
+
+    public function get_data_total_score_by_nor_id()
+    {
+        $sql = "SELECT 5*des_weight AS total,grn_emp_id
+                FROM pefs_database.pef_point_form AS poi
+                INNER JOIN pefs_database.pef_performance_form AS pfm
+                ON poi.ptf_per_id = pfm.per_id
+                INNER JOIN pefs_database.pef_format_form AS pff
+                ON poi.ptf_for_id = pff.for_id
+ 				INNER JOIN pefs_database.pef_description_form AS pdf
+                ON pff.for_des_id = pdf.des_item_id
+                INNER JOIN pefs_database.pef_group_nominee AS grn
+                ON pfm.per_emp_id = grn.grn_emp_id
+                INNER JOIN pefs_database.pef_group AS grp
+                ON grp.grp_id = grn.grn_grp_id
+                INNER JOIN pefs_database.pef_section AS sec
+                ON sec.sec_level = grp.grp_position_group
+                WHERE grn.grn_id = ?";
+        $query = $this->db->query($sql, array($this->grn_id));
+        return $query;
+    } 
     /*
 	* get_point_list
 	* คืนค่าคะแนนของแต่ละฟอร์ม

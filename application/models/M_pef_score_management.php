@@ -1,5 +1,5 @@
 <?php
-    /* 
+/* 
     * M_pef_score_management
     * Model for pef_score_management
     * @author Jaraspon Seallo and Nipat Kuhoksiw
@@ -12,7 +12,7 @@
 include_once("Da_pef_score_management.php");
 
 class M_pef_score_management extends Da_pef_score_management
-{//class M_pef_score_management
+{ //class M_pef_score_management
 
     /*
     * get_score_management_list
@@ -36,10 +36,10 @@ class M_pef_score_management extends Da_pef_score_management
                     ON position.gap_promote = pos.Position_ID
                     GROUP BY gro.grp_id
                 ";
-                
+
         $query = $this->db->query($sql);
         return $query;
-    }//คืนค่าข้อมูลกลุ่มการประเมินของกรรมการ
+    } //คืนค่าข้อมูลกลุ่มการประเมินของกรรมการ
 
     /*
     * get_score_management_list_date
@@ -59,7 +59,7 @@ class M_pef_score_management extends Da_pef_score_management
         ";
         $query = $this->db->query($sql);
         return $query;
-    }//คืนค่าข้อมูลวันที่กลุ่มการประเมินของกรรมการ
+    } //คืนค่าข้อมูลวันที่กลุ่มการประเมินของกรรมการ
 
     /*
     * get_evaluation
@@ -78,7 +78,7 @@ class M_pef_score_management extends Da_pef_score_management
 			";
         $query = $this->db->query($sql);
         return $query;
-    }//คืนค่าการประเมิน
+    } //คืนค่าการประเมิน
 
     /*
     * get_group
@@ -98,7 +98,7 @@ class M_pef_score_management extends Da_pef_score_management
 			WHERE grp_date = ?";
         $query = $this->db->query($sql, array($this->grp_date));
         return $query;
-    }//คืนค่ากลุ่มการประเมิน
+    } //คืนค่ากลุ่มการประเมิน
 
     /*
     * get_group_by_id
@@ -122,9 +122,9 @@ class M_pef_score_management extends Da_pef_score_management
         ON position.gap_promote = pos.Position_ID
 			WHERE grp_id=$id
 			";
-    $query = $this->db->query($sql);
-    return $query;
-    }//คืนค่ากลุ่มโดยไอดี
+        $query = $this->db->query($sql);
+        return $query;
+    } //คืนค่ากลุ่มโดยไอดี
 
     /*
     * get_assessor
@@ -143,7 +143,7 @@ class M_pef_score_management extends Da_pef_score_management
 			";
         $query = $this->db->query($sql);
         return $query;
-    }//คืนค่ากรรมการ
+    } //คืนค่ากรรมการ
 
     /*
     * get_nominee
@@ -164,7 +164,7 @@ class M_pef_score_management extends Da_pef_score_management
 			";
         $query = $this->db->query($sql);
         return $query;
-    }//คืนค่าผู้ถูกประเมิน
+    } //คืนค่าผู้ถูกประเมิน
 
     /*
     * get_nominee_by_id
@@ -186,7 +186,7 @@ class M_pef_score_management extends Da_pef_score_management
 			";
         $query = $this->db->query($sql);
         return $query;
-    }//คืนค่าผู้ถูกประเมินโดยไอดี
+    } //คืนค่าผู้ถูกประเมินโดยไอดี
 
     /*
     * get_form
@@ -207,7 +207,7 @@ class M_pef_score_management extends Da_pef_score_management
 			";
         $query = $this->db->query($sql);
         return $query;
-    }//คืนค่าแบบฟอร์ม
+    } //คืนค่าแบบฟอร์ม
 
     /*
     * get_ass_by_grp_id
@@ -229,7 +229,7 @@ class M_pef_score_management extends Da_pef_score_management
                 WHERE grp.grp_id = $id";
         $query = $this->db->query($sql);
         return $query;
-    }//คืนค่ากลุ่มการประเมินของกรรมการโดยไอดี
+    } //คืนค่ากลุ่มการประเมินของกรรมการโดยไอดี
 
     /*
     * get_data_point_by_nor_id
@@ -242,7 +242,7 @@ class M_pef_score_management extends Da_pef_score_management
     */
     public function get_data_point_by_grp_id($id)
     {
-        $sql = "SELECT sum(ptf_point*des_weight) AS point,grn_emp_id,sum((ptf_per_id*5)*des_weight) AS sum_total
+        $sql = "SELECT sum(ptf_point*des_weight) AS point,grn_emp_id,sum(ptf_point*0) AS total
                 FROM pefs_database.pef_point_form AS poi
                 INNER JOIN pefs_database.pef_performance_form AS pfm
                 ON poi.ptf_per_id = pfm.per_id
@@ -260,7 +260,28 @@ class M_pef_score_management extends Da_pef_score_management
                 GROUP BY grn.grn_emp_id";
         $query = $this->db->query($sql);
         return $query;
-    }//คืนค่าคะแนนโดยกลุ่มไอดี
+    } //คืนค่าคะแนนโดยกลุ่มไอดี
+
+    public function get_data_total_score_by_grp_id($id)
+    {
+        $sql = "SELECT 5*des_weight AS total,grn_emp_id
+                FROM pefs_database.pef_point_form AS poi
+                INNER JOIN pefs_database.pef_performance_form AS pfm
+                ON poi.ptf_per_id = pfm.per_id
+                INNER JOIN pefs_database.pef_format_form AS pff
+                ON poi.ptf_for_id = pff.for_id
+ 				INNER JOIN pefs_database.pef_description_form AS pdf
+                ON pff.for_des_id = pdf.des_item_id
+                INNER JOIN pefs_database.pef_group_nominee AS grn
+                ON pfm.per_emp_id = grn.grn_emp_id
+                INNER JOIN pefs_database.pef_group AS grp
+                ON grp.grp_id = grn.grn_grp_id
+                INNER JOIN pefs_database.pef_section AS sec
+                ON sec.sec_level = grp.grp_position_group
+                WHERE grp.grp_id = $id";
+        $query = $this->db->query($sql);
+        return $query;
+    } 
 
     /*
     * get_data_by_id
@@ -290,6 +311,6 @@ class M_pef_score_management extends Da_pef_score_management
                 WHERE sec.sec_id = $id";
         $query = $this->db->query($sql);
         return $query;
-    }//คืนค่าข้อมูลโดยไอดี
+    } //คืนค่าข้อมูลโดยไอดี
 
 }//end class M_pef_score_management
