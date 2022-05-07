@@ -48,6 +48,35 @@
                 </h6>
                 <hr class="my-4" color="gray">
 
+                <?php
+                $sum_point = 0;
+                $point_total = [];
+                $check_emp = '';
+                $point_ass = [];
+                $total = [];
+                $get = [];
+                foreach ($ass_data as $index_ass => $row_ass) {
+                    foreach ($point_data as $index => $row) {
+                        if ($row_ass->ase_id == $row->per_ase_id) {
+                            $sum_point += intval($row->ptf_point*$row->des_weight);
+                        }
+                        //if 
+                    }
+                    //for each point_data
+                    if ($sum_point != 0) {
+                        array_push($point_total, $sum_point);
+                    } else {
+                        array_push($point_total, 0);
+                    }
+                    $sum_point = 0;
+                }
+                //for each ass_data
+                array_push($point_ass, $point_total);
+                array_push($total, (sizeof($point_data) * 5));
+                array_push($get, array_sum($point_total));
+                $point_total = [];
+                ?>
+
                 <h5 style="text-align:left">
                     <b>Assessors : </b><?php echo $i = count($ass_data); ?> person
                 </h5>
@@ -77,7 +106,7 @@
                                                 <td><?php echo $num++; ?></td>
                                                 <td><?php echo $ass_data[$i]->ase_emp_id; ?></td>
                                                 <td><?php echo $ass_data[$i]->Empname_eng . ' ' . $ass_data[$i]->Empsurname_eng; ?></td>
-                                                <td><?php echo $point_data_only[$i]->point; ?> points</td>
+                                                <td><?php echo $point_ass[$index_point][$i]; ?> points</td>
                                                 <td><?php echo $point_data[$i]->per_comment; ?></td>
                                                 <td><?php echo $point_data[$i]->per_q_and_a; ?></td>
                                             </tr>
@@ -132,8 +161,7 @@
                                 <th scope="col">EmpNo.Assessor</th>
                                 <th scope="col">Name-Surname Assessor</th>
                                 <th scope="col">Position</th>
-                                <th scope="col">Total score pass ≥ 60%</th>
-                                <th scope="col">Result</th>
+                                <th scope="col">Total score</th>
                                 <th scope="col">Comment</th>
                                 <th scope="col">Q & A</th>
                             </tr>
@@ -154,17 +182,8 @@
                                     <td><?php echo $ass_data[$i]->ase_emp_id; ?></td>
                                     <td><?php echo $ass_data[$i]->Empname_eng . ' ' . $ass_data[$i]->Empsurname_eng; ?></td>
                                     <td><?php echo $ass_data[$i]->sec_name; ?></td>
-
-                                    <?php $percent =  $point[$i]->point * 100 / $point[$i]->total; ?>
-                                    <td><?php echo number_format($percent, 2, '.', ''); ?> %</td>
-                                    <?php
-                                    if ($percent >= 60) {
-                                        $Judgement = 'PASS'; ?>
-                                        <td><span style="color:green;"><?php echo $Judgement; ?></span></td>
-                                    <?php } else {
-                                        $Judgement = 'NOT PASS'; ?>
-                                        <td><span style="color:red;"><?php echo $Judgement; ?></span></td>
-                                    <?php } ?>
+                                    <td><?php echo $point_ass[$index_point][$i]; ?> points</td>
+                                   
                                     <td><?php echo $point_data[$i]->per_comment; ?></td>
                                     <td><?php echo $point_data[$i]->per_q_and_a; ?></td>
                                 </tr>
