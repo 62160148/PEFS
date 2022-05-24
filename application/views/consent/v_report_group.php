@@ -134,7 +134,7 @@
                                 <?php } ?>
                                 <th scope="col">Totally score</th>
                                 <th scope="col">Get score</th>
-                                <th scope="col">Total score pass ≥ 60%</th>
+                                <th scope="col">Total score pass ≥ 60 percent</th>
                                 <th scope="col">Judgement</th>
                             </tr>
                         </thead>
@@ -162,7 +162,7 @@
                                         <td><?php echo $point[$i]->total; ?></td>
                                         <td><?php echo $point[$i]->point; ?></td>
                                         <?php $percent = ($point[$i]->point * 100) / ($point[$i]->total); ?>
-                                        <td><?php echo number_format($percent, 2, '.', ''); ?> %</td>
+                                        <td><?php echo number_format($percent, 2, '.', ''); ?> percent</td>
                             
                                         <?php
                                         if ($sec_data[$i]->grn_status_result == '1') {

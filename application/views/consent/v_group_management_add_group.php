@@ -436,7 +436,7 @@ date_default_timezone_set("Asia/Bangkok");
                         console.log(index_emp);
                         count_nominee++;
                         num++
-                        $("#nominee_data").append(data_row);
+                        $("#nominee_data").html(data_row);
                         console.log(count_nominee);
                     })
                 }
@@ -514,7 +514,7 @@ date_default_timezone_set("Asia/Bangkok");
                         data_row += '</tr>'
                         count_index++
                         index++
-                        $("#select_data").append(data_row);
+                        $("#select_data").html(data_row);
                     })
 
                     count = count_index;
